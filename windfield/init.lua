@@ -63,7 +63,7 @@ function World.new(wf, xg, yg, sleep)
     self.is_sensor_memo = {}
     self.query_debug_draw = {}
 
-    --love.physics.setMeter(32)
+    love.physics.setMeter(32)
     self.box2d_world = love.physics.newWorld(xg, yg, sleep) 
 
     return setmetatable(self, World)

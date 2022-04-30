@@ -1,46 +1,44 @@
 wf = require 'windfield'
-
+require 'player'
 function love.load()
     world = wf.newWorld(0, 0, true)
     world:setGravity(0, 512)
-    player = world:newRectangleCollider(300, 250, 50,70)
-    player:setFixedRotation(true)
-    --player:applyAngularImpulse(2500)
-    box = world:newCircleCollider(400,250,15)
-    box:applyAngularImpulse(5000)
+    width = love.graphics.getWidth()
+    height = love.graphics.getHeight()
 
-    ground = world:newRectangleCollider(0, 550, 800, 50)
+    ball = world:newCircleCollider(width/4, height/4, 20)
+    ground = world:newRectangleCollider(0, height, 800, 50)
+    ground2 = world:newRectangleCollider(width*(7/8), height*(3/4), 50, 200)
+    ground3 = world:newRectangleCollider(width/10, height/2,200,50)
+    ground4 = world:newRectangleCollider(width*(1/4),height*(5/8),200,50)
     wall_left = world:newRectangleCollider(0, 0, 50, 600)
     wall_right = world:newRectangleCollider(750,-200,50,600)
+    ball:setRestitution(0.8)
+    ball:applyAngularImpulse(5000)
     ground:setType('static')
+    ground2:setType('static')
+    ground3:setType('static')
+    ground4:setType('static')
     wall_left:setType('static')
     wall_right:setType('static')
-    player_character = {}
-    player.sprite = love.graphics.newImage('pictures/character.png')
+    Player:load()
 end
 
 function love.update(dt)
-    player:getPosition()
-    player_character.x, player_character.y = player:getPosition()
-    local px,py = player:getLinearVelocity()
     world:update(dt)
-    if love.keyboard.isDown('right') and px < 300 then
-        player:applyForce(3000,0)    
-    end
-    if love.keyboard.isDown('left') and py > -300 then
-        player:applyForce(-3000,0)  
-    end
+    Player:update()
 end
 
 function love.draw()
     world:draw()
-    love.graphics.setBackgroundColor(0.41, 0.53, 0.97)
-    love.graphics.draw(player.sprite, player.x, player.y)
-
+    --love.graphics.setBackgroundColor(0.41, 0.53, 0.97)
 end
 
 function love.keypressed(key)
     if key == 'up' then
-        player:applyLinearImpulse(0,-2000)
+        player:applyLinearImpulse(0,-2500)
+    end
+    if key == 'lshift' then
+        player:applyLinearImpulse(2000,0)
     end
 end
