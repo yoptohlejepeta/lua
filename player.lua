@@ -10,7 +10,7 @@ end
 function Player:update(dt)
     local px, py = player:getLinearVelocity()
     print(py,canJump)
-    if math.abs(py) < 1 then
+    if math.abs(py) < 0.5 then
         canJump = true
     else
         canJump = false
@@ -28,7 +28,7 @@ end
 
 
 function Player:keypressed(key)
-    if canJump and key == 'up' then
+    if key == 'up' and canJump then
         player:applyLinearImpulse(0,-2500)
     end
 end

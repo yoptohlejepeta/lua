@@ -24,8 +24,5 @@ function love.draw()
 end
 
 function love.keypressed(key)
-    Player:keypressed()
-    if key == 'up' then
-         player:applyLinearImpulse(0,-2500)
-    end
+    Player:keypressed(key)
 end
