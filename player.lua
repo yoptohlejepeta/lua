@@ -8,13 +8,27 @@ function Player:load()
 end
 
 function Player:update(dt)
-    if love.keyboard.isDown('right') then
+    local px, py = player:getLinearVelocity()
+    print(py,canJump)
+    if math.abs(py) < 1 then
+        canJump = true
+    else
+        canJump = false
+    end
+    if love.keyboard.isDown('right') and px > -1000 then
         player:applyForce(3000,0)
-    elseif love.keyboard.isDown('left') then
+    elseif love.keyboard.isDown('left') and py < 1000 then
         player:applyForce(-3000,0)  
     end
 end
 
 function Player:draw()
     
+end
+
+
+function Player:keypressed(key)
+    if canJump and key == 'up' then
+        player:applyLinearImpulse(0,-2500)
+    end
 end
